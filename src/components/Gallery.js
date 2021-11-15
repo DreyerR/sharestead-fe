@@ -4,8 +4,9 @@ import axios from 'axios';
 
 const Gallery = (props) => {
 
-    const [images, setImages] = useState([]);
     let userId = localStorage.getItem('userId');
+
+    const [images, setImages] = useState([]);
 
     useEffect(() => {
         loadImages();
@@ -20,7 +21,7 @@ const Gallery = (props) => {
             'Authorization': 'Bearer ' + token
         }
 
-        axios.get(`http://localhost:8060/image/fetch/${email}`, {
+        axios.get(`http://192.168.3.228:8060/image/fetch/${email}`, {
             headers: headers
         }).then(response => {
 
@@ -36,7 +37,8 @@ const Gallery = (props) => {
                         <Col key={image.id} lg={4} md={6} sm={12}>
                             <Card style={{ marginBottom: '20px' }}>
                                 <Card.Img className="mx-auto" style={{ width: '90%', height: '250px', objectFit: 'contain', cursor: 'pointer' }} variant="top"
-                                    src={`http://localhost:8060/image/${userId}/display/${image.url}`} onClick={e => {window.open(e.target.src, '_blank').focus()}}  />
+                                    src={`http://192.168.3.228:8060/image/${userId}/display/${image.url}`}
+                                    onClick={e => { window.open(e.target.src, '_blank').focus() }} />
                                 <Card.Body>
                                     <Card.Title>{image.metadata.originalFileName}</Card.Title>
                                     <Card.Text>
@@ -47,7 +49,7 @@ const Gallery = (props) => {
                                 </Card.Body>
                             </Card>
                         </Col>
-                    )) : 
+                    )) :
                         <h1 className="text-center">No images available</h1>
                     }
                 </Row>
