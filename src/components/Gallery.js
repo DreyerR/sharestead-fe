@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Button, Container, Row, Col } from 'react-bootstrap';
+import { Card, Button, Container, Row, Col, ButtonGroup, Dropdown, DropdownButton } from 'react-bootstrap';
+import { faEye, faDownload } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 
 const Gallery = (props) => {
@@ -35,17 +37,31 @@ const Gallery = (props) => {
                 <Row>
                     {images.length > 0 ? images.map(image => (
                         <Col key={image.id} lg={4} md={6} sm={12}>
-                            <Card style={{ marginBottom: '20px' }}>
-                                <Card.Img className="mx-auto" style={{ width: '90%', height: '250px', objectFit: 'contain', cursor: 'pointer' }} variant="top"
+                            <Card style={{ marginBottom: '20px', borderRadius: '10px' }}>
+                                <Card.Img className="mx-auto" style={{ width: '90%', height: '250px', objectFit: 'contain' }} variant="top"
                                     src={`http://192.168.3.228:8060/image/${userId}/display/${image.url}`}
-                                    onClick={e => { window.open(e.target.src, '_blank').focus() }} />
+                                />
                                 <Card.Body>
                                     <Card.Title>{image.metadata.originalFileName}</Card.Title>
                                     <Card.Text>
                                         <strong>Image Size:</strong> {image.metadata.imgSize} bytes <br />
                                         <strong>Date uploaded:</strong> {image.metadata.dateCreated}
                                     </Card.Text>
-                                    <Button variant="primary">Share</Button>
+                                    <div style={{textAlign: 'center'}}>
+                                        <ButtonGroup size="sm">
+                                            <Button onClick={() => { window.open(`http://192.168.3.228:8060/image/${userId}/display/${image.url}`, '_blank').focus() }}>
+                                                <FontAwesomeIcon icon={faEye} /> View
+                                            </Button>
+                                            <Button onClick={() => { window.open(`http://192.168.3.228:8060/image/${userId}/download/${image.url}`, '_blank').focus() }}>
+                                                <FontAwesomeIcon icon={faDownload} /> Download
+                                            </Button>
+
+                                            <DropdownButton as={ButtonGroup} title="More Options" id="bg-nested-dropdown">
+                                                <Dropdown.Item eventKey="1">Share</Dropdown.Item>
+                                                <Dropdown.Item eventKey="2">Delete</Dropdown.Item>
+                                            </DropdownButton>
+                                        </ButtonGroup>
+                                    </div>
                                 </Card.Body>
                             </Card>
                         </Col>
