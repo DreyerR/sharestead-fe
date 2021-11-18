@@ -3,12 +3,18 @@ import { Card, Button, Container, Row, Col, ButtonGroup, Dropdown, DropdownButto
 import { faEye, faDownload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
+import ShareWithModal from './ShareWithModal';
+import DeleteModal from './DeleteModal';
 
 const Gallery = (props) => {
 
     let userId = localStorage.getItem('userId');
 
     const [images, setImages] = useState([]);
+    const [shareWithModalShow, setShareWithModalShow] = useState(false); // To show/hide the share modal
+    const [deleteModalShow, setDeleteModalShow] = useState(false); // To show/hide the delete modal
+    const [selectedImage, setSelectedImage] = useState(""); // To send the selected image to the modal
+    const [deleteForAll, setDeleteForAll] = useState(false); // This is used so that the same delete modal can be used for both options
 
     useEffect(() => {
         loadImages();
@@ -23,12 +29,27 @@ const Gallery = (props) => {
             'Authorization': 'Bearer ' + token
         }
 
-        axios.get(`http://192.168.3.228:8060/image/fetch/${email}`, {
+        axios.get(`http://localhost:8060/image/fetch/${email}`, {
             headers: headers
         }).then(response => {
-
             setImages(response.data.payload);
         }).catch(error => console.log(error.message));
+    }
+
+    const showShareWithModal = url => {
+        setSelectedImage(url);
+        setShareWithModalShow(true);
+    }
+
+    const showDeleteModal = (filename, e) => {
+        setSelectedImage(filename);
+
+        if (e.target.name === "3")
+            setDeleteForAll(true);
+        else
+            setDeleteForAll(false);
+        
+        setDeleteModalShow(true);
     }
 
     return (
@@ -47,7 +68,7 @@ const Gallery = (props) => {
                                         <strong>Image Size:</strong> {image.metadata.imgSize} bytes <br />
                                         <strong>Date uploaded:</strong> {image.metadata.dateCreated}
                                     </Card.Text>
-                                    <div style={{textAlign: 'center'}}>
+                                    <div style={{ textAlign: 'left' }}>
                                         <ButtonGroup size="sm">
                                             <Button onClick={() => { window.open(`http://192.168.3.228:8060/image/${userId}/display/${image.url}`, '_blank').focus() }}>
                                                 <FontAwesomeIcon icon={faEye} /> View
@@ -57,8 +78,9 @@ const Gallery = (props) => {
                                             </Button>
 
                                             <DropdownButton as={ButtonGroup} title="More Options" id="bg-nested-dropdown">
-                                                <Dropdown.Item eventKey="1">Share</Dropdown.Item>
-                                                <Dropdown.Item eventKey="2">Delete</Dropdown.Item>
+                                                <Dropdown.Item eventKey="1" onClick={() => showShareWithModal(image.url)}>Share</Dropdown.Item>
+                                                <Dropdown.Item eventKey="2" onClick={(e) => showDeleteModal(image.url, e)}>Delete For Me</Dropdown.Item>
+                                                <Dropdown.Item eventKey="3" name="3" onClick={(e) => showDeleteModal(image.url, e)}>Delete For All</Dropdown.Item>
                                             </DropdownButton>
                                         </ButtonGroup>
                                     </div>
@@ -70,6 +92,8 @@ const Gallery = (props) => {
                     }
                 </Row>
             </Container>
+            <ShareWithModal filename={selectedImage} show={shareWithModalShow} onHide={() => setShareWithModalShow(false)} />
+            <DeleteModal deleteforall={deleteForAll} filename={selectedImage} show={deleteModalShow} onHide={() => setDeleteModalShow(false)} />
         </div>
     )
 }

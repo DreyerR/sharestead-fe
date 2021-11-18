@@ -47,7 +47,7 @@ const Register = () => {
         setTimeout(() => {
             if (wasSuccessful) {
                 updateRegister(!didRegister);
-            } 
+            }
             else {
                 updateShowToast(false);
                 updateSubmitForm(false);
@@ -132,7 +132,7 @@ const Register = () => {
                                 <FontAwesomeIcon icon={faRedo} style={{ marginRight: '5px' }} /> Clear
                             </Button>
 
-                            <Button type="submit" style={{cursor: 'pointer'}} className="ms-3" variant="success" disabled={didSubmitForm}>
+                            <Button type="submit" style={{ cursor: 'pointer' }} className="ms-3" variant="success" disabled={didSubmitForm}>
                                 <div><FontAwesomeIcon icon={faSave} style={{ marginRight: '5px' }} />
                                     {didSubmitForm ? 'Please wait...' : 'Register'}
                                 </div>
