@@ -40,9 +40,6 @@ const Navigationbar = (props) => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        {/* <Nav.Item>
-                            <Link to={"welcome"} className="nav-link">Welcome</Link>
-                        </Nav.Item> */}
                         {loggedIn ? userLinks : null}
                     </Nav>
                     <Nav className="navbar-right">

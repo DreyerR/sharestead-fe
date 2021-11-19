@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Button, Container, Row, Col, ButtonGroup, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Card, Button, Container, Row, Col, ButtonGroup, Dropdown, DropdownButton, Badge } from 'react-bootstrap';
 import { faEye, faDownload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import ShareWithModal from './ShareWithModal';
 import DeleteModal from './DeleteModal';
+import RevokeAccessModal from './RevokeAccessModal';
 
 const Gallery = (props) => {
 
@@ -15,6 +16,7 @@ const Gallery = (props) => {
     const [deleteModalShow, setDeleteModalShow] = useState(false); // To show/hide the delete modal
     const [selectedImage, setSelectedImage] = useState(""); // To send the selected image to the modal
     const [deleteForAll, setDeleteForAll] = useState(false); // This is used so that the same delete modal can be used for both options
+    const [revokeModalShow, setRevokeModalShow] = useState(false);
 
     useEffect(() => {
         loadImages();
@@ -52,6 +54,11 @@ const Gallery = (props) => {
         setDeleteModalShow(true);
     }
 
+    const revokeModalClick = (filename) => {
+        setSelectedImage(filename);
+        setRevokeModalShow(true);
+    }
+
     return (
         <div>
             <Container>
@@ -59,6 +66,7 @@ const Gallery = (props) => {
                     {images.length > 0 ? images.map(image => (
                         <Col key={image.id} lg={4} md={6} sm={12}>
                             <Card style={{ marginBottom: '20px', borderRadius: '10px' }}>
+                            <Badge style={{ "display": image.sharedImage ? "block" : "none" }} className="ms-auto" bg="danger">Shared Image</Badge>
                                 <Card.Img className="mx-auto" style={{ width: '90%', height: '250px', objectFit: 'contain' }} variant="top"
                                     src={`http://192.168.3.228:8060/image/${userId}/display/${image.url}`}
                                 />
@@ -81,6 +89,7 @@ const Gallery = (props) => {
                                                 <Dropdown.Item eventKey="1" onClick={() => showShareWithModal(image.url)}>Share</Dropdown.Item>
                                                 <Dropdown.Item eventKey="2" onClick={(e) => showDeleteModal(image.url, e)}>Delete For Me</Dropdown.Item>
                                                 <Dropdown.Item eventKey="3" name="3" onClick={(e) => showDeleteModal(image.url, e)}>Delete For All</Dropdown.Item>
+                                                <Dropdown.Item eventKey="4" name="4" onClick={() => revokeModalClick(image.url)}>Revoke Access</Dropdown.Item>
                                             </DropdownButton>
                                         </ButtonGroup>
                                     </div>
@@ -94,6 +103,7 @@ const Gallery = (props) => {
             </Container>
             <ShareWithModal filename={selectedImage} show={shareWithModalShow} onHide={() => setShareWithModalShow(false)} />
             <DeleteModal deleteforall={deleteForAll} filename={selectedImage} show={deleteModalShow} onHide={() => setDeleteModalShow(false)} />
+            <RevokeAccessModal filename={selectedImage} show={revokeModalShow} onHide={() => setRevokeModalShow(false)} />
         </div>
     )
 }
