@@ -89,7 +89,7 @@ function Photo(props) {
             formData.append('file', file)
         ));
 
-        axios.post(`http://192.168.3.228:8060/image/${userId}/upload`, formData, {
+        axios.post(`http://sharestead-env-2.eba-mbvpyjui.eu-west-3.elasticbeanstalk.com/image/${userId}/upload`, formData, {
             headers: headers
         }).then(response => {
             if (response.status === 200) {

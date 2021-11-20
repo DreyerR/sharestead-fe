@@ -22,7 +22,7 @@ const Register = () => {
             'Content-Type': 'application/json',
         }
 
-        axios.post("http://localhost:8060/member/register", details, {
+        axios.post("http://sharestead-env-2.eba-mbvpyjui.eu-west-3.elasticbeanstalk.com/member/register", details, {
             headers: headers
         }).then(response => {
             if (response.status === 201) {
