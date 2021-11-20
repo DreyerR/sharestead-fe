@@ -34,7 +34,7 @@ function DeleteModal(props) {
             'Authorization': `Bearer ${token}`
         }
 
-        axios.delete(`http://sharestead-env-2.eba-mbvpyjui.eu-west-3.elasticbeanstalk.com/image/delete/all/${email}/${props.filename}`, {
+        axios.delete(`https://cors-everywhere.herokuapp.com/http://sharestead-env-2.eba-mbvpyjui.eu-west-3.elasticbeanstalk.com/image/delete/all/${email}/${props.filename}`, {
             headers: headers
         }).then(response => {
             if (response.status === 200) {
@@ -70,7 +70,7 @@ function DeleteModal(props) {
             'Authorization': `Bearer ${token}`
         }
 
-        axios.delete(`http://sharestead-env-2.eba-mbvpyjui.eu-west-3.elasticbeanstalk.com/image/delete/${email}/${props.filename}`, {
+        axios.delete(`https://cors-everywhere.herokuapp.com/http://sharestead-env-2.eba-mbvpyjui.eu-west-3.elasticbeanstalk.com/image/delete/${email}/${props.filename}`, {
             headers: headers
         }).then(response => {
             if (response.status === 200) {

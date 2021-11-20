@@ -38,7 +38,7 @@ export default function Login() {
             'Content-Type': 'application/json',
         }
 
-        axios.post("http://sharestead-env-2.eba-mbvpyjui.eu-west-3.elasticbeanstalk.com/member/login", loginDetails, {
+        axios.post("https://cors-everywhere.herokuapp.com/http://sharestead-env-2.eba-mbvpyjui.eu-west-3.elasticbeanstalk.com/member/login", loginDetails, {
             headers: headers
         }).then(response => {
             let isSuccessful = true;
