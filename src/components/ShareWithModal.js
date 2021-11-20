@@ -30,7 +30,7 @@ function ShareWithModal(props) {
             'Authorization': `Bearer ${token}`
         }
 
-        axios.post(`https://cors-everywhere.herokuapp.com/http://sharestead-env-2.eba-mbvpyjui.eu-west-3.elasticbeanstalk.com/image/share/${sharedBy}/${emailText}/${props.filename}?isModifiable=${chk.checked}`, null, {
+        axios.post(`http://sharestead-env-2.eba-mbvpyjui.eu-west-3.elasticbeanstalk.com/image/share/${sharedBy}/${emailText}/${props.filename}?isModifiable=${chk.checked}`, null, {
             headers: headers
         }).then(response => {
             setSuccess(true);

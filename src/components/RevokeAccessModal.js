@@ -28,7 +28,7 @@ function RevokeAccessModal(props) {
             'Authorization': `Bearer ${token}`
         }
 
-        axios.put(`https://cors-everywhere.herokuapp.com/http://sharestead-env-2.eba-mbvpyjui.eu-west-3.elasticbeanstalk.com/image/revoke/${emailText}/${props.filename}`, null, {
+        axios.put(`http://sharestead-env-2.eba-mbvpyjui.eu-west-3.elasticbeanstalk.com/image/revoke/${emailText}/${props.filename}`, null, {
             headers: headers
         }).then(response => {
             setSuccess(true);

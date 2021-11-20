@@ -31,7 +31,7 @@ const Gallery = (props) => {
             'Authorization': 'Bearer ' + token
         }
 
-        axios.get(`https://cors-everywhere.herokuapp.com/http://sharestead-env-2.eba-mbvpyjui.eu-west-3.elasticbeanstalk.com/image/fetch/${email}`, {
+        axios.get(`http://sharestead-env-2.eba-mbvpyjui.eu-west-3.elasticbeanstalk.com/image/fetch/${email}`, {
             headers: headers
         }).then(response => {
             setImages(response.data.payload);
@@ -68,7 +68,7 @@ const Gallery = (props) => {
                             <Card style={{ marginBottom: '20px', borderRadius: '10px' }}>
                             <Badge style={{ "display": image.sharedImage ? "block" : "none" }} className="ms-auto" bg="danger">Shared Image</Badge>
                                 <Card.Img className="mx-auto" style={{ width: '90%', height: '250px', objectFit: 'contain' }} variant="top"
-                                    src={`https://cors-everywhere.herokuapp.com/http://sharestead-env-2.eba-mbvpyjui.eu-west-3.elasticbeanstalk.com/image/${userId}/display/${image.url}`}
+                                    src={`http://sharestead-env-2.eba-mbvpyjui.eu-west-3.elasticbeanstalk.com/image/${userId}/display/${image.url}`}
                                 />
                                 <Card.Body>
                                     <Card.Title>{image.metadata.originalFileName}</Card.Title>
@@ -78,10 +78,10 @@ const Gallery = (props) => {
                                     </Card.Text>
                                     <div style={{ textAlign: 'left' }}>
                                         <ButtonGroup size="sm">
-                                            <Button onClick={() => { window.open(`https://cors-everywhere.herokuapp.com/http://sharestead-env-2.eba-mbvpyjui.eu-west-3.elasticbeanstalk.com/image/${userId}/display/${image.url}`, '_blank').focus() }}>
+                                            <Button onClick={() => { window.open(`http://sharestead-env-2.eba-mbvpyjui.eu-west-3.elasticbeanstalk.com/image/${userId}/display/${image.url}`, '_blank').focus() }}>
                                                 <FontAwesomeIcon icon={faEye} /> View
                                             </Button>
-                                            <Button onClick={() => { window.open(`https://cors-everywhere.herokuapp.com/http://sharestead-env-2.eba-mbvpyjui.eu-west-3.elasticbeanstalk.com/image/${userId}/download/${image.url}`, '_blank').focus() }}>
+                                            <Button onClick={() => { window.open(`http://sharestead-env-2.eba-mbvpyjui.eu-west-3.elasticbeanstalk.com/image/${userId}/download/${image.url}`, '_blank').focus() }}>
                                                 <FontAwesomeIcon icon={faDownload} /> Download
                                             </Button>
 
