@@ -6,6 +6,7 @@ import axios from 'axios';
 import ShareWithModal from './ShareWithModal';
 import DeleteModal from './DeleteModal';
 import RevokeAccessModal from './RevokeAccessModal';
+import RenameModal from './RenameModal';
 
 const Gallery = (props) => {
 
@@ -17,6 +18,7 @@ const Gallery = (props) => {
     const [selectedImage, setSelectedImage] = useState(""); // To send the selected image to the modal
     const [deleteForAll, setDeleteForAll] = useState(false); // This is used so that the same delete modal can be used for both options
     const [revokeModalShow, setRevokeModalShow] = useState(false);
+    const [renameModalShow, setRenameModalShow] = useState(false);
 
     useEffect(() => {
         loadImages();
@@ -59,6 +61,11 @@ const Gallery = (props) => {
         setRevokeModalShow(true);
     }
 
+    const renameModalClick = filename => {
+        setSelectedImage(filename);
+        setRenameModalShow(true);
+    }
+
     const convertToMB = sizeInBytes => {
         return (sizeInBytes / 1024).toFixed(2);
     }
@@ -94,6 +101,7 @@ const Gallery = (props) => {
                                                 <Dropdown.Item eventKey="2" onClick={(e) => showDeleteModal(image.url, e)}>Delete For Me</Dropdown.Item>
                                                 <Dropdown.Item eventKey="3" name="3" onClick={(e) => showDeleteModal(image.url, e)}>Delete For All</Dropdown.Item>
                                                 <Dropdown.Item eventKey="4" name="4" onClick={() => revokeModalClick(image.url)}>Revoke Access</Dropdown.Item>
+                                                <Dropdown.Item eventKey="5" name="5" onClick={() => renameModalClick(image.url)}>Rename</Dropdown.Item>
                                             </DropdownButton>
                                         </ButtonGroup>
                                     </div>
@@ -108,6 +116,7 @@ const Gallery = (props) => {
             <ShareWithModal filename={selectedImage} show={shareWithModalShow} onHide={() => setShareWithModalShow(false)} />
             <DeleteModal deleteforall={deleteForAll} filename={selectedImage} show={deleteModalShow} onHide={() => setDeleteModalShow(false)} />
             <RevokeAccessModal filename={selectedImage} show={revokeModalShow} onHide={() => setRevokeModalShow(false)} />
+            <RenameModal filename={selectedImage} show={renameModalShow} onHide={() => setRenameModalShow(false)} />
         </div>
     )
 }
