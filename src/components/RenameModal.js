@@ -38,13 +38,6 @@ function RenameModal(props) {
             }
         }).catch(error => {
             console.log(error.message);
-            if (error.response.status === 405)
-                setToastMessage(error.response.data.message);
-            else if (error.response.status === 404)
-                setToastMessage("User could not be found");
-            else
-                setToastMessage("Photo is already shared with that user");
-
             setSuccess(false);
         });
 
