@@ -16,7 +16,7 @@ const Welcome = (props) => {
                         <p className="lead">
                             To get started, please create an account or simply login.
                         </p>
-                        <p>This platform enable the uploading, managing and sharing of images.</p>
+                        <p>This platform enables the uploading, managing and sharing of images.</p>
                         <p>This is a project that was built for our CMPG323 module.</p>
                     </div>
                 </Col>

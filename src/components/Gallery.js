@@ -59,6 +59,10 @@ const Gallery = (props) => {
         setRevokeModalShow(true);
     }
 
+    const convertToMB = sizeInBytes => {
+        return (sizeInBytes / 1024).toFixed(2);
+    }
+
     return (
         <div>
             <Container>
@@ -73,7 +77,7 @@ const Gallery = (props) => {
                                 <Card.Body>
                                     <Card.Title>{image.metadata.originalFileName}</Card.Title>
                                     <Card.Text>
-                                        <strong>Image Size:</strong> {image.metadata.imgSize} bytes <br />
+                                        <strong>Image Size:</strong> {convertToMB(image.metadata.imgSize)} KB <br />
                                         <strong>Date uploaded:</strong> {image.metadata.dateCreated}
                                     </Card.Text>
                                     <div style={{ textAlign: 'left' }}>

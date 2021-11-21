@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { useDropzone } from 'react-dropzone';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
@@ -34,6 +34,8 @@ const rejectStyle = {
 };
 
 function Photo(props) {
+
+    const [disablebutton, setDisableButton] = useState(false);
 
     const {
         getRootProps,
@@ -75,7 +77,6 @@ function Photo(props) {
     ));
 
     const uploadFiles = () => {
-
         let userId = localStorage.getItem('userId');
         let token = localStorage.getItem('token');
 
@@ -96,6 +97,7 @@ function Photo(props) {
                 alert('File(s) successfully uploaded');
             }
         }).catch(error => console.log(error.message));
+        setDisableButton(false);
     }
 
     return (
@@ -121,9 +123,9 @@ function Photo(props) {
             </Card.Body>
             <Card.Footer>
                 <div className="d-flex justify-content-end">
-                    <Button variant="success" onClick={uploadFiles} >
+                    <Button variant="success" onClick={() => {setDisableButton(true); uploadFiles();}} disabled={disablebutton} >
                         <div><FontAwesomeIcon icon={faUpload} style={{ marginRight: '5px' }} />
-                            Upload
+                            {disablebutton ? 'Please wait...' : 'Upload'}
                         </div>
                     </Button>
                 </div>
